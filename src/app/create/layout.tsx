@@ -1,9 +1,15 @@
 import { ReactNode } from "react";
 
+export const metadata = {
+  title: "Create a Free Online Quiz",
+  description:
+    "Easily create a quiz to share with friends and family. Give your quiz a name, add multiple choice questions, and then share to the world.",
+};
+
 export default function Layout({ children }: { children: ReactNode }) {
   return (
     <>
-      <nav className="navbar navbar-expand-lg bg-light">
+      <nav className="navbar navbar-expand-lg bg-light mb-0">
         <div className="container-fluid">
           <a className="navbar-brand" href={"/"} title="Homepage">
             Quiz App
@@ -28,7 +34,7 @@ export default function Layout({ children }: { children: ReactNode }) {
           </div>
         </div>
       </nav>
-      <div>{children}</div>
+      <div className="content-container">{children}</div>
     </>
   );
 }

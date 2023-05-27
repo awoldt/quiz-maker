@@ -257,14 +257,13 @@ export default function Create() {
                     onClick={async () => {
                       if (questions.length !== 0 && quizTitle !== "") {
                         setCreatingNewQuizLoading(true);
-                        const x: _quiz = {
-                          title: quizTitle,
-                          questions: questions,
-                        };
 
                         const data = await fetch("/api/create_quiz", {
                           method: "post",
-                          body: JSON.stringify(x),
+                          body: JSON.stringify({
+                            quiz_title: quizTitle,
+                            questions: questions,
+                          }),
                           headers: {
                             "Content-Type": "application/json",
                           },

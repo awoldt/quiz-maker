@@ -28,7 +28,18 @@ body {
 label {
   margin-right: 5px;
 }
-
+li {
+  max-width: 1000px;
+}
+.container-fluid {
+  padding: 0px !important;
+}
+nav {
+  padding: 10px !important;
+}
+.content-container {
+  padding: 25px;
+}
 .question-div {
   padding: 5px;
   margin-bottom: 15px;
@@ -172,7 +183,8 @@ label {
   display: inline-block;
   margin-right: 100px;
   float: left;
-  margin-top: 100px;
+  margin-top: 50px;
+  margin-bottom: 50px;
 }
 .wrong-answer {
   background-color: lightcoral;

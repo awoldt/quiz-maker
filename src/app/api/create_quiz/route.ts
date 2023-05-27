@@ -14,7 +14,7 @@ export async function POST(request: Request) {
   try {
     const req = JSON.parse(await new Response(request.body).text());
     const profanityResults = await filterProfanity(
-      req.title.trim(),
+      req.quiz_title.trim(),
       req.questions
     );
 
@@ -26,7 +26,7 @@ export async function POST(request: Request) {
       };
       return NextResponse.json(returnData);
     } else {
-      const newQuiz = await createQuiz(req.title, req.questions);
+      const newQuiz = await createQuiz(req.quiz_title, req.questions);
 
       //500
       if (newQuiz === null) {
@@ -52,6 +52,9 @@ export async function POST(request: Request) {
     console.log(e);
     console.log("could not save quiz");
 
-    return NextResponse.json({ msg: "Error oke!" });
+    return NextResponse.json({
+      status: 500,
+      msg: "Error while creating quiz :(",
+    });
   }
 }

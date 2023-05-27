@@ -3,7 +3,7 @@ import { ReactNode } from "react";
 export default function Layout({ children }: { children: ReactNode }) {
   return (
     <>
-      <nav className="navbar navbar-expand-lg bg-light">
+      <nav className="navbar navbar-expand-lg bg-light mb-0">
         <div className="container-fluid">
           <a className="navbar-brand" href={"/"} title="Homepage">
             Quiz App
@@ -28,7 +28,7 @@ export default function Layout({ children }: { children: ReactNode }) {
           </div>
         </div>
       </nav>
-      <div>{children}</div>
+      <div className="content-container">{children}</div>
     </>
   );
 }

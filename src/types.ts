@@ -9,8 +9,7 @@ export interface _question {
 
 export interface _quiz {
   quiz_id?: number; //pk
-  title: string;
-  questions: _question[];
+  quiz_title: string;
   created_on?: string;
 }
 

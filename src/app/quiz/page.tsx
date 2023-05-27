@@ -14,15 +14,18 @@ type Props = {
 export async function generateMetadata({
   searchParams,
 }: Props): Promise<Metadata> {
-  const quizTitle = (
-    await pool.query(
-      `select quiz_title from quizs where quiz_id = ${searchParams.id};`
-    )
-  ).rows[0].quiz_title;
-
-  return {
-    title: quizTitle,
-  };
+  const quizTitle = await pool.query(
+    `select quiz_title from quizs where quiz_id = ${searchParams.id};`
+  );
+  if (quizTitle.rowCount === 0) {
+    return {
+      title: "quiz does not exist",
+    };
+  } else {
+    return {
+      title: quizTitle.rows[0].quiz_title,
+    };
+  }
 }
 
 export default async function QuizPage({
