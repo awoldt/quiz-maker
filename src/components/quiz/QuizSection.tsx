@@ -103,18 +103,24 @@ export default function QuizSection({
           )}
           {finalScore === null && (
             <div>
-              <label htmlFor="view_select">Select view:</label>
-              <select
-                id="view_select"
-                onChange={(e) => {
-                  if (e.target.value === "list" || e.target.value === "card") {
-                    setCurrentView(e.target!.value);
-                  }
-                }}
-              >
-                <option value={"list"}>List</option>
-                <option value={"card"}>Card</option>
-              </select>
+              <div className="mb-4">
+                <label htmlFor="view_select">Select view:</label>
+                <select
+                  id="view_select"
+                  onChange={(e) => {
+                    if (
+                      e.target.value === "list" ||
+                      e.target.value === "card"
+                    ) {
+                      setCurrentView(e.target!.value);
+                    }
+                  }}
+                >
+                  <option value={"list"}>List</option>
+                  <option value={"card"}>Card</option>
+                </select>
+              </div>
+
               {currentView === "list" && (
                 <QuestionList
                   uAnswers={[userAnswers, setUserAnswers]}

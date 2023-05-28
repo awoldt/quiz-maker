@@ -35,7 +35,6 @@ export default function Create() {
       {newQuizCreated && (
         <>
           <div className="alert alert-success mt-3">{alertMessage[1]}</div>
-
           <ul>
             <li>
               <b>Quiz id</b>: {newQuizId}
@@ -47,13 +46,10 @@ export default function Create() {
               <b>Number of questions</b>: {questions.length}
             </li>
           </ul>
-          <hr></hr>
-          <h2>Share this quiz</h2>
-          <a href={`/quiz?id=${newQuizId}`}>
-            <button className="btn btn-primary" style={{ marginRight: "10px" }}>
-              Visit <img src="/icons/open-in-new.svg" alt="pop out icon" />
-            </button>
-          </a>
+          <p>
+            <strong>Be sure to copy this link: </strong>{" "}
+            <a href={`/quiz?id=${newQuizId}`}>QUIZ</a>
+          </p>
         </>
       )}
       {!newQuizCreated && (
@@ -228,6 +224,7 @@ export default function Create() {
 
             {!questionBeingAdded && questions.length === 0 && (
               <button
+                className="btn btn-warning"
                 onClick={() => {
                   if (quizTitle !== "") {
                     setQuestionBeingAdded(true);

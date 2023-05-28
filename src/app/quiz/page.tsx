@@ -23,7 +23,7 @@ export async function generateMetadata({
     };
   } else {
     return {
-      title: quizTitle.rows[0].quiz_title,
+      title: quizTitle.rows[0].quiz_title + " | Free Online Quiz",
     };
   }
 }
@@ -45,10 +45,10 @@ export default async function QuizPage({
             {quizData.num_of_submissions !== 0 && (
               <>
                 <div className="quiz-stats">
-                  Avg score: {quizData.average_score}%
+                  Avg score: <b>{quizData.average_score.toFixed(2)}%</b>
                 </div>
                 <div className="quiz-stats">
-                  Number of subimissions: {quizData.num_of_submissions}
+                  Number of subimissions: <b>{quizData.num_of_submissions}</b>
                 </div>
               </>
             )}

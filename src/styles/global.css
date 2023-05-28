@@ -28,6 +28,9 @@ body {
 label {
   margin-right: 5px;
 }
+a {
+  text-decoration: none !important;
+}
 li {
   max-width: 1000px;
 }
@@ -68,7 +71,7 @@ nav {
 }
 .question-being-added {
   padding: 10px;
-  background-color: rgb(211, 211, 211, 0.5);
+  background-color: rgb(211, 211, 211, 0.3);
   width: 1000px;
   border-radius: 8px;
   border: 1px solid black;
@@ -113,7 +116,7 @@ nav {
 }
 
 #quiz_title_input {
-  width: 45%;
+  min-width: 500px;
   height: 50px;
   font-size: 25px;
   margin-bottom: 25px;
@@ -179,13 +182,7 @@ nav {
 .quiz-links {
   width: fit-content;
 }
-.featured-quizzes {
-  display: inline-block;
-  margin-right: 100px;
-  float: left;
-  margin-top: 50px;
-  margin-bottom: 50px;
-}
+
 .wrong-answer {
   background-color: lightcoral;
   width: fit-content;
@@ -196,11 +193,15 @@ nav {
   color: blue;
 }
 
-.featured-quiz-category-title {
-  border-top: 5px solid black;
-}
-
 nav {
   margin-bottom: 25px;
   width: 100%;
+}
+.inline-div {
+  display: inline-block;
+  margin-right: 50px;
+}
+
+.featured-quiz-category-title {
+  font-size: 25px;
 }

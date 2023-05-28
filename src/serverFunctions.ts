@@ -6,16 +6,12 @@ export async function filterProfanity(
   questions: _question[]
 ): Promise<boolean | null> {
   try {
-    const profanityList = await fetch(
-      "https://storage.googleapis.com/quiz-resources/profanity_list.txt",
-      {
-        method: "get",
-        headers: {
-          "Content-Type": "text/plain",
-        },
-        cache: "no-store",
-      }
-    );
+    const profanityList = await fetch(process.env.PROFANITY_LIST_URL!, {
+      method: "get",
+      headers: {
+        "Content-Type": "text/plain",
+      },
+    });
     if (profanityList.status === 200) {
       const badWords = (await new Response(profanityList.body).text()).split(
         "\n"

@@ -171,6 +171,8 @@ export default function EditDiv({
         })}
       </div>
       <button
+      className="btn btn-primary"
+        style={{ marginRight: "10px" }}
         onClick={() => {
           if (
             validateQuestionAdded(

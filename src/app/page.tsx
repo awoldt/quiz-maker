@@ -3,24 +3,12 @@ import { _question, _quiz } from "../types";
 export const revalidate = 60; //revalidates cache every min
 
 export const metadata = {
-  title: "Quiz App",
-  description: "Create and share quizzes with the internet",
+  title: "Free Online Quiz Maker",
+  description:
+    "Create and share quizzes with the others without the hassle of having to create an account. Unlimited quizzes with as many questions as you want.",
 };
 
 async function App() {
-  const mostRecentQuizs = await pool.query(
-    "select * from quizs order by created_on desc;"
-  );
-  const numberOfQuizs = mostRecentQuizs.rowCount;
-
-  mostRecentQuizs.rowCount > 10 ? (mostRecentQuizs.rows.length = 10) : null; //limit to 10 records returned
-  const hardestQuizs = await pool.query(
-    "select quizs.quiz_title, graded_quizs.quiz_id, AVG(graded_quizs.score) as avg_score from graded_quizs join quizs on graded_quizs.quiz_id = quizs.quiz_id group by quizs.quiz_title, graded_quizs.quiz_id order by avg_score asc limit 10;"
-  );
-  const numberOfQuestions = await pool.query(
-    `select count(*) as count from questions;`
-  );
-
   return (
     <div>
       <div id="center_div_homescreen" className="container">
@@ -31,16 +19,12 @@ async function App() {
             <button className="btn btn-danger">📝 Create Quiz</button>
           </a>
         </div>
-        <span>
-          <b>{numberOfQuizs}</b> quizzes
-        </span>{" "}
-        <span>
-          <b>{numberOfQuestions.rows[0].count}</b> questions
-        </span>
-        <p
-          className="mx-auto text-center mt-4"
-          style={{ maxWidth: "700px", fontSize: "18px" }}
-        >
+      </div>
+
+      <hr></hr>
+
+      <div className="content-container">
+        <p style={{maxWidth: '1250px'}}>
           This website is a user-friendly online platform that allows you to
           create and share interactive quizzes with others. You can craft
           personalized quizzes to challenge your friends and engage with a wider
@@ -48,10 +32,6 @@ async function App() {
           or simply looking for a fun way to connect with others, our platform
           empowers you to design captivating quizzes in minutes.
         </p>
-      </div>
-
-      <hr></hr>
-      <div className="content-container">
         <h2>Features</h2>
         <ul>
           <li>
@@ -93,47 +73,6 @@ async function App() {
             </p>
           </li>
         </ul>
-
-        {mostRecentQuizs.rowCount > 0 && (
-          <div className="featured-quizzes">
-            <h2 className="featured-quiz-category-title">Most Recent</h2>
-            {mostRecentQuizs.rows.map((x: any, index: number) => {
-              return (
-                <div key={index}>
-                  {" "}
-                  <a href={`/quiz?id=${x.quiz_id}`} className="quiz-links">
-                    {x.quiz_title}
-                  </a>
-                </div>
-              );
-            })}
-          </div>
-        )}
-
-        {hardestQuizs.rowCount > 0 && (
-          <div className="featured-quizzes">
-            <h2 className="featured-quiz-category-title">Hardest Quizzes</h2>
-            {hardestQuizs.rows.map((x: any, index: number) => {
-              return (
-                <>
-                  <div>
-                    <a
-                      key={index}
-                      href={`/quiz?id=${x.quiz_id}`}
-                      className="quiz-links"
-                    >
-                      {x.quiz_title}
-                    </a>
-                    <span>
-                      {" "}
-                      AVG SCORE <b>{Number(x.avg_score).toFixed(2)}%</b>
-                    </span>
-                  </div>
-                </>
-              );
-            })}
-          </div>
-        )}
       </div>
     </div>
   );
