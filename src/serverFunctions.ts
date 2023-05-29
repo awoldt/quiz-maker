@@ -107,11 +107,12 @@ export async function filterProfanity(
 
 export default async function createQuiz(
   quizTitle: string,
-  quizQuestions: _question[]
+  quizQuestions: _question[],
+  allowIndexing: boolean
 ) {
   try {
     const newQuiz = await pool.query(
-      `insert into quizs (quiz_title) values ('${quizTitle.trim()}') returning quiz_id;`
+      `insert into quizs (quiz_title, indexable) values ('${quizTitle.trim()}', ${allowIndexing}) returning quiz_id;`
     );
 
     //creates a string for sql insert query
@@ -195,6 +196,7 @@ export async function getQuizPageData(
         questions: questionsData.rows,
         average_score: Number(gradesData.rows[0].avg_scores),
         num_of_submissions: Number(gradesData.rows[0].num_of_submissions),
+        is_quiz_indexable: quizData.rows[0].indexable,
       };
       return x;
     }

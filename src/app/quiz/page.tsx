@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { getQuizPageData } from "@/serverFunctions";
 import { Metadata } from "next";
 import pool from "@/DB";
+import Head from "next/head";
 
 type Props = {
   params: { id: string };
@@ -22,8 +23,13 @@ export async function generateMetadata({
       title: "quiz does not exist",
     };
   } else {
+    const quizData = await getQuizPageData(String(searchParams.id));
+
     return {
       title: quizTitle.rows[0].quiz_title + " | Free Online Quiz",
+      robots: {
+        index: quizData!.is_quiz_indexable,
+      },
     };
   }
 }
@@ -41,22 +47,12 @@ export default async function QuizPage({
         <>
           <h1>{quizData.quiz_title}</h1>
           <p>Quiz was created on {String(quizData.quiz_created_on)}</p>
-          <div>
-            {quizData.num_of_submissions !== 0 && (
-              <>
-                <div className="quiz-stats">
-                  Avg score: <b>{quizData.average_score.toFixed(2)}%</b>
-                </div>
-                <div className="quiz-stats">
-                  Number of subimissions: <b>{quizData.num_of_submissions}</b>
-                </div>
-              </>
-            )}
-          </div>
+
           <hr></hr>
           <QuizSection
             questionsData={quizData.questions}
             quizId={quizData.quiz_id}
+            quizData={quizData}
           />
         </>
       );

@@ -26,7 +26,11 @@ export async function POST(request: Request) {
       };
       return NextResponse.json(returnData);
     } else {
-      const newQuiz = await createQuiz(req.quiz_title, req.questions);
+      const newQuiz = await createQuiz(
+        req.quiz_title,
+        req.questions,
+        req.allowIndex
+      );
 
       //500
       if (newQuiz === null) {

@@ -2,6 +2,7 @@
 
 import {
   _LOCALSTORAGE_quizs,
+  _PAGEDATA_quiz,
   _RESPONSE_get_quiz_grade,
   _question,
   _quiz,
@@ -10,13 +11,16 @@ import { useEffect, useState } from "react";
 import QuestionCard from "./QuestionCard";
 import QuestionList from "./QuestionsList";
 import { hasUserCompletedQuiz } from "@/clientFunctions";
+import QuizResults from "./QuizResults";
 
 export default function QuizSection({
   questionsData,
   quizId,
+  quizData,
 }: {
   questionsData: _question[];
   quizId: number;
+  quizData: _PAGEDATA_quiz;
 }) {
   const [currentView, setCurrentView] = useState<"card" | "list">("list");
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState<
@@ -46,60 +50,12 @@ export default function QuizSection({
       {!initialLoading && (
         <>
           {finalScore !== null && (
-            <>
-              <h2>Quiz Results</h2>
-              <p style={{ fontSize: "50px" }}>
-                <b>You scored a {finalScore}%</b>
-              </p>
-              <hr></hr>
-              <p>Here are your quiz results</p>
-
-              {questionsData.map((x: _question, index: number) => {
-                if (userAnswers[index] === x.correct_answer) {
-                  return (
-                    <div key={index}>
-                      <h2 className="quiz-result-question-list">
-                        {x.question_title}
-                      </h2>
-                      <img src={"/icons/check.svg"} />
-
-                      {x.prompts.map((y, index2: number) => {
-                        if (x.correct_answer === index2) {
-                          return (
-                            <div key={index2} className="correct-answer">
-                              {y}
-                            </div>
-                          );
-                        } else {
-                          return <div key={index2}>{y}</div>;
-                        }
-                      })}
-                    </div>
-                  );
-                } else {
-                  return (
-                    <div key={index}>
-                      <h2 className="quiz-result-question-list">
-                        {x.question_title}
-                      </h2>
-                      <img src={"/icons/x.svg"} />
-
-                      {x.prompts.map((y, index2: number) => {
-                        if (x.correct_answer === index2) {
-                          return (
-                            <div key={index2} className="wrong-answer">
-                              {y}
-                            </div>
-                          );
-                        } else {
-                          return <div key={index2}>{y}</div>;
-                        }
-                      })}
-                    </div>
-                  );
-                }
-              })}
-            </>
+            <QuizResults
+              finalScore={finalScore!}
+              quizData={quizData}
+              questionsData={questionsData}
+              userAnswers={userAnswers}
+            />
           )}
           {finalScore === null && (
             <div>

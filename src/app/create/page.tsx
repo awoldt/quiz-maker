@@ -3,6 +3,7 @@
 import AddQuestionBtn from "@/components/create/AddQuestionBtn";
 import EditDiv from "@/components/create/EditQuestion";
 import QuestionPrompts from "@/components/create/QuestionPrompts";
+import QuizOptions from "@/components/quiz/QuizOptions";
 import { _question, _quiz } from "@/types";
 import { useState } from "react";
 
@@ -30,6 +31,7 @@ export default function Create() {
   >([null, null]); //[status, msg]
 
   const [showQuestionEdit, setShowQuestionEdit] = useState<number | null>(null); //number represents the index of the questions array that is being edited
+  const [allowSearchIndexing, setAllowSearchIndexing] = useState<boolean>(true); //allow users quiz to be featured in search results, default true
   return (
     <>
       {newQuizCreated && (
@@ -93,6 +95,7 @@ export default function Create() {
                 maxLength={150}
               />
             </div>
+
             <div>
               {questionBeingAdded && (
                 <div className="question-being-added">
@@ -243,15 +246,22 @@ export default function Create() {
               questions.length >= 1 &&
               showQuestionEdit === null &&
               !creatingNewQuizLoading && (
-                <button
-                  className="btn btn-primary"
-                  onClick={() => {
-                    setQuestionBeingAdded(true);
-                  }}
-                >
-                  <img src="/icons/plus.svg" /> Add another question
-                </button>
+                <>
+                  <button
+                    className="btn btn-primary"
+                    onClick={() => {
+                      setQuestionBeingAdded(true);
+                    }}
+                  >
+                    <img src="/icons/plus.svg" /> Add another question
+                  </button>
+                  <QuizOptions
+                    allowIndex={allowSearchIndexing}
+                    setAllowIndex={setAllowSearchIndexing}
+                  />
+                </>
               )}
+
             {!questionBeingAdded && questions.length === 0 && (
               <button
                 className="btn btn-primary"
@@ -298,6 +308,7 @@ export default function Create() {
                               body: JSON.stringify({
                                 quiz_title: quizTitle,
                                 questions: questions,
+                                allowIndex: allowSearchIndexing
                               }),
                               headers: {
                                 "Content-Type": "application/json",

@@ -11,6 +11,7 @@ export interface _quiz {
   quiz_id?: number; //pk
   quiz_title: string;
   created_on?: string;
+  indexable: boolean;
 }
 
 export interface _gradedQuiz {
@@ -54,4 +55,5 @@ export interface _PAGEDATA_quiz {
   questions: _question[];
   average_score: number;
   num_of_submissions: number;
+  is_quiz_indexable: boolean;
 }

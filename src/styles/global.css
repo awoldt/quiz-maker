@@ -12,10 +12,10 @@
     font-size: 18px;
   }
   #stat_display {
-    font-size: 50px;
+    font-size: 35px;
   }
   .stat-text {
-    font-size: 50px !important;
+    font-size: 35px !important;
   }
 }
 
@@ -106,6 +106,9 @@ nav {
 }
 .question-list-div div {
   padding: 3px;
+}
+.question-list-div p {
+  margin-bottom: 3px;
 }
 .question-list-div div:hover {
   background-color: lightblue;
@@ -223,10 +226,6 @@ nav {
   padding: 10px;
 }
 
-.quiz-stats {
-  color: blue;
-}
-
 nav {
   margin-bottom: 25px;
   width: 100%;
@@ -238,4 +237,10 @@ nav {
 
 .featured-quiz-category-title {
   font-size: 25px;
+}
+
+#quiz_results_div {
+  background-color: rgb(55, 63, 81, 0.4) !important;
+  color: black;
+  padding: 20px;
 }
