@@ -50,7 +50,9 @@ export default function AddQuestionBtn({
           setPrompts([]);
           setTitle("");
         } else {
-          alert("missing inputs for question");
+          alert(
+            "Question must have a title, all answer choices filled out, and a correct answer selected before adding"
+          );
         }
       }}
     >

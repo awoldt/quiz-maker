@@ -1,14 +1,16 @@
-import pool from "@/DB";
+import { GetHomepageStats } from "@/serverFunctions";
 import { _question, _quiz } from "../types";
-export const revalidate = 60; //revalidates cache every min
+export const revalidate = 3600; //revalidates cache every hour
 
 export const metadata = {
   title: "Free Online Quiz Maker",
   description:
-    "Create and share quizzes with the others without the hassle of having to create an account. Unlimited quizzes with as many questions as you want.",
+    "Create and share quizzes with the others without the hassle of having to create an account. Unlimited quizzes with as many questions as you want. No sign up required.",
 };
 
 async function App() {
+  const stats = await GetHomepageStats();
+
   return (
     <div>
       <div id="center_div_homescreen">
@@ -20,6 +22,21 @@ async function App() {
       </div>
 
       <div className="content-container">
+        <p className="text-center mt-5 mb-5" id="stat_display">
+          {" "}
+          There are currently{" "}
+          <span className="stat-text">
+            {Number(stats![0].count) % 5 !== 0 ? (
+              <>
+                over {Number(stats![0].count) - (Number(stats![0].count) % 5)}
+              </>
+            ) : (
+              Number(stats![0].count)
+            )}
+          </span>{" "}
+          quizzes with <span className="stat-text">{stats![1].count}</span>{" "}
+          questions stored in our database
+        </p>
         <p style={{ maxWidth: "1250px" }}>
           This website is a user-friendly online platform that allows you to
           create and share interactive quizzes with others. You can craft

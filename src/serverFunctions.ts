@@ -154,7 +154,7 @@ export async function saveGradeToDb(
   }
 }
 
-//returns all the data needed to render quiz
+//returns all the data needed to render quiz (/quiz?id=xx)
 //1. quiz data
 //2. questions data
 //3. graded attempts data
@@ -198,6 +198,21 @@ export async function getQuizPageData(
       };
       return x;
     }
+  } catch (e) {
+    console.log(e);
+    return null;
+  }
+}
+
+//gets number of quizs and questions stored in db
+//to showcase on homepage
+// returns [quizCount, questionsCount]
+export async function GetHomepageStats(): Promise<any[] | null> {
+  try {
+    const n = await pool.query(
+      `select count(*)  from quizs union select count(*) from questions;`
+    );
+    return n.rows;
   } catch (e) {
     console.log(e);
     return null;

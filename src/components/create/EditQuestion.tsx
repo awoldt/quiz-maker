@@ -171,7 +171,7 @@ export default function EditDiv({
         })}
       </div>
       <button
-      className="btn btn-primary"
+        className="btn btn-primary"
         style={{ marginRight: "10px" }}
         onClick={() => {
           if (
@@ -203,7 +203,9 @@ export default function EditDiv({
             setCorrectAnswer(null);
             setPrompts([]);
           } else {
-            alert("missing inputs for question");
+            alert(
+              "Question must have a title, all answer choices filled out, and a correct answer selected before adding"
+            );
           }
         }}
       >

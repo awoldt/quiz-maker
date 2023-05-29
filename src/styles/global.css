@@ -11,6 +11,12 @@
   p {
     font-size: 18px;
   }
+  #stat_display {
+    font-size: 50px;
+  }
+  .stat-text {
+    font-size: 50px !important;
+  }
 }
 
 @keyframes spin {
@@ -24,8 +30,13 @@
 
 .navbar {
   background-color: #373f51 !important;
-  
 }
+.stat-text {
+  color: #373f51 !important;
+  font-size: 25px;
+  font-weight: 600;
+}
+
 .navbar a {
   color: white !important;
 }

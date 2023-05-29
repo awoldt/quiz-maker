@@ -11,7 +11,7 @@ const letterChoices = ["A", "B", "C", "D"];
 export default function Create() {
   const [quizTitle, setQuizTitle] = useState<string>("");
   const [questions, setQuestions] = useState<_question[]>([]);
-  const [questionBeingAdded, setQuestionBeingAdded] = useState<boolean>(false); //the skeleton templete to create a new question before adding it to questions state variable array
+  const [questionBeingAdded, setQuestionBeingAdded] = useState<boolean>(false); //the skeleton template to create a new question before adding it to questions variable array
 
   const [questionTitle, setQuestionTitle] = useState<string>("");
   const [questionPrompts, setQuestionPrompts] = useState<(string | null)[]>(
