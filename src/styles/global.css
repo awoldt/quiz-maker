@@ -8,8 +8,8 @@
   #center_div_homescreen h1 {
     font-size: 60px;
   }
-  #center_div_homescreen p {
-    font-size: 30px;
+  p {
+    font-size: 18px;
   }
 }
 
@@ -20,6 +20,14 @@
   100% {
     transform: rotate(360deg);
   }
+}
+
+.navbar {
+  background-color: #373f51 !important;
+  
+}
+.navbar a {
+  color: white !important;
 }
 
 body {
@@ -33,6 +41,9 @@ a {
 }
 li {
   max-width: 1000px;
+}
+li p {
+  margin-bottom: 0px;
 }
 .container-fluid {
   padding: 0px !important;
@@ -72,9 +83,12 @@ nav {
 .question-being-added {
   padding: 10px;
   background-color: rgb(211, 211, 211, 0.3);
-  width: 1000px;
+  max-width: 1250px;
+  width: 70%;
+  min-width: 400px;
   border-radius: 8px;
-  border: 1px solid black;
+  box-shadow: 3px 5px;
+  margin-bottom: 25px;
 }
 .question-list-div {
   margin-bottom: 25px;
@@ -116,7 +130,9 @@ nav {
 }
 
 #quiz_title_input {
-  min-width: 500px;
+  max-width: 1250px;
+  width: 70%;
+  min-width: 400px;
   height: 50px;
   font-size: 25px;
   margin-bottom: 25px;
@@ -125,6 +141,10 @@ nav {
 .question-answer-input {
   width: 60%;
   margin-bottom: 10px;
+}
+
+.answer-choice {
+  width: fit-content;
 }
 
 .question-title {
@@ -136,8 +156,9 @@ nav {
 }
 #center_div_homescreen {
   text-align: center;
-  margin-bottom: 50px;
-  margin-top: 50px;
+  background-color: #373f51;
+  padding: 40px;
+  color: white;
 }
 #num_of_quizs_tag {
   font-weight: 900;
@@ -176,7 +197,9 @@ nav {
 
 #question_title_input {
   font-size: 18px;
-  min-width: 700px;
+  max-width: 1250px;
+  width: 70%;
+  min-width: 300px;
 }
 
 .quiz-links {

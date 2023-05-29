@@ -11,7 +11,7 @@ const letterChoices = ["A", "B", "C", "D"];
 export default function Create() {
   const [quizTitle, setQuizTitle] = useState<string>("");
   const [questions, setQuestions] = useState<_question[]>([]);
-  const [questionBeingAdded, setQuestionBeingAdded] = useState<boolean>(false); //the skeleton templete for end user to create a new question before adding it to questions state variable array
+  const [questionBeingAdded, setQuestionBeingAdded] = useState<boolean>(false); //the skeleton templete to create a new question before adding it to questions state variable array
 
   const [questionTitle, setQuestionTitle] = useState<string>("");
   const [questionPrompts, setQuestionPrompts] = useState<(string | null)[]>(
@@ -55,7 +55,24 @@ export default function Create() {
       {!newQuizCreated && (
         <>
           <h1>Create a quiz</h1>
-
+          <span>Constraints:</span>
+          <ul>
+            <li>
+              <p>
+                Quiz and question titles along with all other text submitted
+                must not contain profranity
+              </p>
+            </li>
+            <li>
+              <p>
+                Each question added must contain values for all answer choices
+                (A,B,C,D)
+              </p>
+            </li>
+            <li>
+              <p>Quiz must have at least one question</p>
+            </li>
+          </ul>
           <form
             onSubmit={(e) => {
               e.preventDefault();
@@ -147,20 +164,13 @@ export default function Create() {
                 </div>
               )}
             </div>
-            {!questionBeingAdded &&
-              questions.length >= 1 &&
-              showQuestionEdit === null && (
-                <button
-                  onClick={() => {
-                    setQuestionBeingAdded(true);
-                  }}
-                >
-                  Add another question
-                </button>
-              )}
+
             {questions.length > 0 && (
               <>
                 {questions.map((x: _question, index: number) => {
+                  {
+                    //show the editQuestion component
+                  }
                   if (index === showQuestionEdit) {
                     return (
                       // eslint-disable-next-line react/jsx-key
@@ -178,9 +188,11 @@ export default function Create() {
                       />
                     );
                   } else {
+                    {
+                      //render the normal question div
+                    }
                     return (
                       <div key={index}>
-                        <hr></hr>
                         <span>Question {index + 1}</span>{" "}
                         <span
                           className="edit-question-span"
@@ -208,11 +220,17 @@ export default function Create() {
                           if (x.correct_answer === index2) {
                             return (
                               <p key={index2} className="correct-answer-div">
+                                {letterChoices[index2] + ". "}
                                 {y}
                               </p>
                             );
                           } else {
-                            return <p key={index2}>{y}</p>;
+                            return (
+                              <p key={index2}>
+                                {letterChoices[index2] + ". "}
+                                {y}
+                              </p>
+                            );
                           }
                         })}
                       </div>
@@ -221,10 +239,22 @@ export default function Create() {
                 })}
               </>
             )}
-
+            {!questionBeingAdded &&
+              questions.length >= 1 &&
+              showQuestionEdit === null &&
+              !creatingNewQuizLoading && (
+                <button
+                  className="btn btn-primary"
+                  onClick={() => {
+                    setQuestionBeingAdded(true);
+                  }}
+                >
+                  <img src="/icons/plus.svg" /> Add another question
+                </button>
+              )}
             {!questionBeingAdded && questions.length === 0 && (
               <button
-                className="btn btn-warning"
+                className="btn btn-primary"
                 onClick={() => {
                   if (quizTitle !== "") {
                     setQuestionBeingAdded(true);
@@ -247,44 +277,53 @@ export default function Create() {
                     role="status"
                   ></div>
                 )}
-                {!creatingNewQuizLoading && showQuestionEdit === null && (
-                  <button
-                    type="submit"
-                    className="btn btn-danger"
-                    onClick={async () => {
-                      if (questions.length !== 0 && quizTitle !== "") {
-                        setCreatingNewQuizLoading(true);
+                {!creatingNewQuizLoading &&
+                  showQuestionEdit === null &&
+                  !questionBeingAdded && (
+                    <>
+                      <hr></hr>
 
-                        const data = await fetch("/api/create_quiz", {
-                          method: "post",
-                          body: JSON.stringify({
-                            quiz_title: quizTitle,
-                            questions: questions,
-                          }),
-                          headers: {
-                            "Content-Type": "application/json",
-                          },
-                        });
-                        const json = await data.json();
+                      <button
+                        type="submit"
+                        className="btn btn-danger"
+                        onClick={async () => {
+                          if (questions.length !== 0 && quizTitle !== "") {
+                            if (alertMessage[0] !== null) {
+                              setAlertMessage([null, null]);
+                            }
+                            setCreatingNewQuizLoading(true);
 
-                        if (data.status === 200) {
-                          if (json.status === 200) {
-                            setNewQuizCreated(true);
-                            setNewQuizId(json.newQuizData);
-                            setAlertMessage(["success", json.msg]);
+                            const data = await fetch("/api/create_quiz", {
+                              method: "post",
+                              body: JSON.stringify({
+                                quiz_title: quizTitle,
+                                questions: questions,
+                              }),
+                              headers: {
+                                "Content-Type": "application/json",
+                              },
+                            });
+                            const json = await data.json();
+
+                            if (data.status === 200) {
+                              if (json.status === 200) {
+                                setNewQuizCreated(true);
+                                setNewQuizId(json.newQuizData);
+                                setAlertMessage(["success", json.msg]);
+                              } else {
+                                setAlertMessage(["error", json.msg]);
+                              }
+                            }
+                            setCreatingNewQuizLoading(false);
                           } else {
-                            setAlertMessage(["error", json.msg]);
+                            alert("Missing data for quiz");
                           }
-                        }
-                        setCreatingNewQuizLoading(false);
-                      } else {
-                        alert("Missing data for quiz");
-                      }
-                    }}
-                  >
-                    Create Quiz
-                  </button>
-                )}
+                        }}
+                      >
+                        Create Quiz
+                      </button>
+                    </>
+                  )}
               </>
             )}
           </form>

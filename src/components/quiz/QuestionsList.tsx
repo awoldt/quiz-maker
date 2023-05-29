@@ -32,7 +32,7 @@ export default function QuestionList({
               if (index2 === uAnswers[0][index]) {
                 return (
                   <div
-                    className="selected-answer"
+                    className="selected-answer answer-choice"
                     key={index2}
                     onClick={() => {
                       const x = [...uAnswers[0]];
@@ -44,6 +44,7 @@ export default function QuestionList({
               } else {
                 return (
                   <div
+                  className="answer-choice"
                     key={index2}
                     onClick={() => {
                       const x = [...uAnswers[0]];
@@ -57,6 +58,9 @@ export default function QuestionList({
           </div>
         );
       })}
+      {
+        //show submit btn once all answers have been chosen
+      }
       {uAnswers[0].indexOf(undefined) === -1 && (
         <button
           className="btn btn-primary"

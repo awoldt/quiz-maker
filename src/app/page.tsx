@@ -11,20 +11,16 @@ export const metadata = {
 async function App() {
   return (
     <div>
-      <div id="center_div_homescreen" className="container">
-        <div>
-          <h1>Create a Quiz in Seconds</h1>
-          <p>No account needed. Always free.</p>
-          <a href={"/create"}>
-            <button className="btn btn-danger">📝 Create Quiz</button>
-          </a>
-        </div>
+      <div id="center_div_homescreen">
+        <h1>Create a Quiz in Seconds</h1>
+        <p>No account needed. Always free.</p>
+        <a href={"/create"}>
+          <button className="btn btn-light">📝 Create Quiz</button>
+        </a>
       </div>
 
-      <hr></hr>
-
       <div className="content-container">
-        <p style={{maxWidth: '1250px'}}>
+        <p style={{ maxWidth: "1250px" }}>
           This website is a user-friendly online platform that allows you to
           create and share interactive quizzes with others. You can craft
           personalized quizzes to challenge your friends and engage with a wider

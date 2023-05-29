@@ -13,9 +13,11 @@ export async function filterProfanity(
       },
     });
     if (profanityList.status === 200) {
-      const badWords = (await new Response(profanityList.body).text()).split(
-        "\n"
-      );
+      const badWords = (await new Response(profanityList.body).text())
+        .split("\n")
+        .map((x) => {
+          return x.split("\r")[0];
+        });
 
       let CONTAINS_PROFANITY: boolean = false;
 
