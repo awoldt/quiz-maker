@@ -6,11 +6,15 @@ import { NextResponse } from "next/server";
 export async function POST(request: Request) {
   try {
     const body = JSON.parse(await new Response(request.body).text());
-  
+    console.log("GET QUIZ GRADED POST REQUEST");
+    console.log(body);
 
     const gradeData = await pool.query(
-      `select answers_given, score from graded_quizs where grade_id = ${body.grade_id};`
+      `select answers_given, score from graded_quizs where graded_id = '${body.grade_id}';`
     );
+
+    console.log("GRAD ED DATA!!!");
+    console.log(gradeData.rows);
 
     const x: _RESPONSE_get_quiz_grade = {
       score: gradeData.rows[0].score,

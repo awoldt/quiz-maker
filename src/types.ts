@@ -24,7 +24,7 @@ export interface _gradedQuiz {
 
 export interface _RESPONSE_grade {
   score: number;
-  graded_id: number;
+  graded_id: string;
   msg: string;
 }
 
@@ -38,8 +38,8 @@ export interface _RESPONSE_create_quiz {
 }
 
 interface _localstorage_quiz_structure {
-  quiz_id: number;
-  grade_id: number;
+  quiz_id: string;
+  grade_id: string;
 }
 
 export interface _LOCALSTORAGE_quizs {
@@ -47,7 +47,7 @@ export interface _LOCALSTORAGE_quizs {
 }
 
 export interface _PAGEDATA_quiz {
-  quiz_id: number;
+  quiz_id: string;
   quiz_title: string;
   quiz_created_on: string;
   questions: _question[];

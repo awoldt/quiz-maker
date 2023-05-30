@@ -19,7 +19,7 @@ export default function QuizSection({
   quizData,
 }: {
   questionsData: _question[];
-  quizId: number;
+  quizId: string;
   quizData: _PAGEDATA_quiz;
 }) {
   const [currentView, setCurrentView] = useState<"card" | "list">("list");

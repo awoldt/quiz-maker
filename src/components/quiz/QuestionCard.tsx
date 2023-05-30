@@ -21,7 +21,7 @@ export default function QuestionCard({
   ];
   allQData: _question[];
   setScore: React.Dispatch<React.SetStateAction<number | null>>;
-  quizId: number;
+  quizId: string;
 }) {
   return (
     <div className="question-div">
@@ -45,7 +45,7 @@ export default function QuestionCard({
         } else {
           return (
             <div
-            className="prompt-div"
+              className="prompt-div"
               key={index}
               onClick={() => {
                 const x = [...uAnswers[0]];
@@ -84,6 +84,12 @@ export default function QuestionCard({
                 });
                 if (data.status === 200) {
                   const jsonData: _RESPONSE_grade = await data.json();
+
+
+
+                  console.log(jsonData);
+                  
+
 
                   //first quiz graded
                   if (localStorage.getItem("quizs") === null) {

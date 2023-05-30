@@ -147,17 +147,20 @@ export default async function createQuiz(
 
 export async function saveGradeToDb(
   score: number,
-  quizId: number,
+  quizId: string,
   userAnswers: number[]
-): Promise<number | null> {
+): Promise<string | null> {
   try {
+    console.log("attempting to save grade to db!");
+
     const query = await pool.query(
-      `insert into graded_quizs (score, quiz_id, answers_given) values (${score}, ${quizId}, array [${userAnswers}]) RETURNING grade_id;`
+      `insert into graded_quizs (score, quiz_id, answers_given) values (${score}, '${quizId}', array [${userAnswers}]) RETURNING graded_id;`
     );
 
     console.log("sucessfully stored graded quiz in databse!");
+    console.log(query.rows);
 
-    return query.rows[0].grade_id;
+    return query.rows[0].graded_id;
   } catch (e) {
     console.log(e);
     return null;
@@ -199,7 +202,7 @@ export async function getQuizPageData(
       console.log(gradesData.rows);
 
       const x: _PAGEDATA_quiz = {
-        quiz_id: Number(id),
+        quiz_id: id,
         quiz_title: quizData.rows[0].quiz_title,
         quiz_created_on: quizData.rows[0].created_on,
         questions: questionsData.rows,

@@ -5,11 +5,18 @@ import { NextResponse } from "next/server";
 
 export async function POST(request: Request) {
   try {
-    //body => [qAnswer, uAnswers, quizId]
+    //body => [qAnswer, uAnswers, graded_id]
     const body = JSON.parse(await new Response(request.body).text());
+
+    console.log("\npost request to grade quiz!!!");
     
+    console.log(body);
+
     const score = scoreQuiz(body[0], body[1]);
     const newRecord = await saveGradeToDb(score!, body[2], body[1]);
+
+    console.log("NEW GRADE RECORD SAVED!");
+    console.log(newRecord);
 
     if (newRecord !== null) {
       const x: _RESPONSE_grade = {

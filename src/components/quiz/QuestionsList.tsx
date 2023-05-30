@@ -15,7 +15,7 @@ export default function QuestionList({
   ];
   allQData: _question[];
   setScore: React.Dispatch<React.SetStateAction<number | null>>;
-  quizId: number;
+  quizId: string;
 }) {
   return (
     <>
@@ -44,7 +44,7 @@ export default function QuestionList({
               } else {
                 return (
                   <div
-                  className="answer-choice"
+                    className="answer-choice"
                     key={index2}
                     onClick={() => {
                       const x = [...uAnswers[0]];
@@ -79,8 +79,12 @@ export default function QuestionList({
                   "Content-Type": "application/json",
                 },
               });
+
+              console.log(data);
+
               if (data.status === 200) {
                 const jsonData: _RESPONSE_grade = await data.json();
+                console.log("JSON DATA");
 
                 //first quiz graded
                 if (localStorage.getItem("quizs") === null) {
