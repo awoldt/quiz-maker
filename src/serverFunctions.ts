@@ -110,10 +110,17 @@ export default async function createQuiz(
   quizQuestions: _question[],
   allowIndexing: boolean
 ) {
+  console.log("QUIZ DATA OK");
+  console.log(quizTitle);
+  console.log(quizQuestions);
+  console.log(allowIndexing);
+
   try {
     const newQuiz = await pool.query(
       `insert into quizs (quiz_title, indexable) values ('${quizTitle.trim()}', ${allowIndexing}) returning quiz_id;`
     );
+
+    console.log(newQuiz);
 
     //creates a string for sql insert query
     const qs = quizQuestions
@@ -122,9 +129,11 @@ export default async function createQuiz(
           (y: string | null) => {
             return `'${y!.trim()}'`;
           }
-        )}], ${x.correct_answer}, ${newQuiz.rows[0].quiz_id})`;
+        )}], ${x.correct_answer}, '${newQuiz.rows[0].quiz_id}')`;
       })
       .join(",");
+
+    console.log(qs);
 
     await pool.query(`insert into questions values ${qs};`);
     console.log("new quiz successfully created");
@@ -164,7 +173,7 @@ export async function getQuizPageData(
 ): Promise<_PAGEDATA_quiz | null> {
   try {
     const quizData = await pool.query(
-      `select * from quizs where quiz_id = ${id}`
+      `select * from quizs where quiz_id = '${id}'`
     );
     console.log("QUIZ DATA");
 
@@ -178,13 +187,13 @@ export async function getQuizPageData(
     //quiz exists, fetch other related data
     else {
       const questionsData = await pool.query(
-        `select * from questions where quiz_id = ${id}`
+        `select * from questions where quiz_id = '${id}'`
       );
       console.log("QUESTIONS DATA");
       console.log(questionsData.rows);
 
       const gradesData = await pool.query(
-        `select avg(score) as avg_scores, count(score) as num_of_submissions from graded_quizs where quiz_id = ${id};`
+        `select avg(score) as avg_scores, count(score) as num_of_submissions from graded_quizs where quiz_id = '${id}';`
       );
       console.log("GRADES DATA");
       console.log(gradesData.rows);

@@ -22,21 +22,6 @@ async function App() {
       </div>
 
       <div className="content-container">
-        <p className="text-center mt-5 mb-5" id="stat_display">
-          {" "}
-          There are currently{" "}
-          <span className="stat-text">
-            {Number(stats![0].count) % 5 !== 0 ? (
-              <>
-                over {Number(stats![0].count) - (Number(stats![0].count) % 5)}
-              </>
-            ) : (
-              Number(stats![0].count)
-            )}
-          </span>{" "}
-          quizzes with <span className="stat-text">{stats![1].count}</span>{" "}
-          questions stored in our database
-        </p>
         <p style={{ maxWidth: "1250px" }}>
           This website is a user-friendly online platform that allows you to
           create and share interactive quizzes with others. You can craft

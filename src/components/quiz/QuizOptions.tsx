@@ -18,7 +18,9 @@ export default function QuizOptions({
           setAllowIndex(e.target.checked);
         }}
       />
-      <label htmlFor="indexable_checkbox">Allow indexing</label>{" "}
+      <label htmlFor="indexable_checkbox" style={{ marginLeft: "5px" }}>
+        Allow indexing
+      </label>{" "}
       <p className="text-muted" style={{ display: "inline", fontSize: "14px" }}>
         <i>
           (This will allow your quiz to appear in search like Google and Bing)

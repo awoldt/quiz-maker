@@ -1,14 +1,13 @@
 //TABLES --
-
 export interface _question {
   question_title: string;
   prompts: (string | null)[];
-  correct_answer: number; // the index of answers that is correct
-  quiz_id?: number; //fk
+  correct_answer: number; // the index of prompts that is correct
+  quiz_id?: string; //fk
 }
 
 export interface _quiz {
-  quiz_id?: number; //pk
+  quiz_id?: string; //pk
   quiz_title: string;
   created_on?: string;
   indexable: boolean;
@@ -19,9 +18,8 @@ export interface _gradedQuiz {
   score: number;
   answers_given: number[];
   completed_on?: string;
-  quiz_id: number; //fk
+  quiz_id: string; //fk
 }
-
 //-- END TABLES
 
 export interface _RESPONSE_grade {
@@ -36,7 +34,7 @@ export interface _RESPONSE_get_quiz_grade {
 }
 
 export interface _RESPONSE_create_quiz {
-  quizId: number;
+  quizId: string;
 }
 
 interface _localstorage_quiz_structure {
