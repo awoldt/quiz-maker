@@ -20,6 +20,12 @@
   #homepage_content_container p {
     font-size: 28px !important;
   }
+  #homepage_content_container span {
+    font-size: 28px !important;
+  }
+  #homepage_content_container a {
+    font-size: 28px !important;
+  }
   .app-features-col {
     padding: 25px !important;
   }
@@ -46,6 +52,13 @@
   }
 }
 
+.homepage-featured-quizzes {
+  display: inline-block;
+  margin-right: 50px;
+}
+.homepage-quizzes-links {
+  display: block;
+}
 .navbar {
   background-color: #373f51 !important;
 }
@@ -259,7 +272,9 @@ nav {
 }
 
 #quiz_results_div {
-  background-color: rgb(55, 63, 81, 0.4) !important;
+  background-color: rgb(55, 63, 81, 0.2) !important;
   color: black;
   padding: 20px;
+  border-radius: 8px;
+  border: 3px solid #373f51;
 }

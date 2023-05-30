@@ -1,3 +1,4 @@
+import pool from "@/DB";
 import { _question, _quiz } from "../types";
 export const revalidate = 3600; //revalidates cache every hour
 
@@ -8,6 +9,24 @@ export const metadata = {
 };
 
 async function App() {
+  const recentQuizzes = await (
+    await pool.query(
+      "select quiz_id, quiz_title from quizs order by created_on desc;"
+    )
+  ).rows;
+  recentQuizzes.length > 5 ? (recentQuizzes.length = 5) : null; //return at most 5 quizzes
+
+  const popularQuizzes = await (
+    await pool.query(
+      `SELECT q.quiz_id, q.quiz_title
+      FROM quizs q
+      JOIN graded_quizs gq ON q.quiz_id = gq.quiz_id
+      GROUP BY q.quiz_id, q.quiz_title
+      ORDER BY COUNT(gq.quiz_id) DESC;`
+    )
+  ).rows;
+  popularQuizzes.length > 5 ? (popularQuizzes.length = 5) : null; //return at most 5 quizzes
+
   return (
     <div>
       <div id="center_div_homescreen">
@@ -18,21 +37,17 @@ async function App() {
         </a>
       </div>
 
-      <div
-        className="content-container text-center"
-        id="homepage_content_container"
-      >
+      <div className="content-container" id="homepage_content_container">
         <p style={{ maxWidth: "1250px" }} className="mx-auto mt-4 mb-5">
           This website is a user-friendly online platform that allows you to
-          create and share interactive quizzes with others. You can craft
-          personalized quizzes to challenge your friends and engage with a wider
-          audience for free. Whether you&apos;re a teacher, a trivia enthusiast,
-          or simply looking for a fun way to connect with others, our platform
-          empowers you to design captivating quizzes in minutes.
+          create and share interactive quizzes. You can craft personalized
+          quizzes to challenge your friends and engage with a wider audience for
+          free. Whether you&apos;re a teacher, a trivia enthusiast, or simply
+          looking for a fun way to connect with others, our platform empowers
+          you to design captivating quizzes in minutes.
         </p>
 
         <div className="row justify-content-center">
-          <h2><u>Features</u></h2>
           <div className="col-xl-6 app-features-col">
             <p>
               <b>Instant Feedback and Results</b>: We provide immediate feedback
@@ -54,6 +69,56 @@ async function App() {
               devices, ensuring that quizzes can be taken on smartphones and
               tablets without any loss in functionality or user experience.
             </p>
+          </div>
+        </div>
+        <hr></hr>
+        <p style={{ maxWidth: "1250px" }} className="mx-auto mt-5 mb-5">
+          Below you can find some quizzes hosted on this platform to try out.
+          Make sure that when creating a quiz to select the{" "}
+          <i>Allow indexing</i> option to feature your quizzes in onilne search
+          as well as across this site.
+        </p>
+        <div className="container mb-5">
+          <div className="homepage-featured-quizzes">
+            <div>
+              <span>
+                <u>Most recent</u>
+              </span>
+              <div>
+                {recentQuizzes.map((x, index: number) => {
+                  return (
+                    <a
+                      href={`/quiz?id=${x.quiz_id}`}
+                      key={index}
+                      className="homepage-quizzes-links"
+                    >
+                      {x.quiz_title}
+                    </a>
+                  );
+                })}
+              </div>
+            </div>
+          </div>
+
+          <div className="homepage-featured-quizzes">
+            <div>
+              <span>
+                <u>Most popular</u>
+              </span>
+            </div>
+            <div>
+              {popularQuizzes.map((x, index: number) => {
+                return (
+                  <a
+                    href={`/quiz?id=${x.quiz_id}`}
+                    key={index}
+                    className="homepage-quizzes-links"
+                  >
+                    {x.quiz_title}
+                  </a>
+                );
+              })}
+            </div>
           </div>
         </div>
       </div>

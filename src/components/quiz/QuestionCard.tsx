@@ -85,12 +85,6 @@ export default function QuestionCard({
                 if (data.status === 200) {
                   const jsonData: _RESPONSE_grade = await data.json();
 
-
-
-                  console.log(jsonData);
-                  
-
-
                   //first quiz graded
                   if (localStorage.getItem("quizs") === null) {
                     const x: _LOCALSTORAGE_quizs = {

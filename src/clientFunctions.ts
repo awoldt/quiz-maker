@@ -48,8 +48,6 @@ export async function hasUserCompletedQuiz(
     for (let index = 0; index < x.graded_quizs.length; index++) {
       //user has completed current quiz, show score
       if (x.graded_quizs[index].quiz_id === quizID) {
-        console.log(x.graded_quizs[index].quiz_id === quizID);
-
         hasDoneQuiz = true;
 
         try {
@@ -62,13 +60,9 @@ export async function hasUserCompletedQuiz(
               "Content-Type": "application/json",
             },
           });
-          console.log("DATA FETCH GRADED RESULTS");
-          console.log(data);
 
           if (data.status === 200) {
-            console.log("USER HSA COMPLETED THIS QUIZ GETTING RADE");
             const jsonData: _RESPONSE_get_quiz_grade = await data.json();
-            console.log(jsonData);
 
             setUserAnswers(jsonData.answers);
             setFinalScore(jsonData.score);
