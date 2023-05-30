@@ -1,5 +1,7 @@
 import { _PAGEDATA_quiz, _question } from "@/types";
 
+const letterChoices = ["A", "B", "C", "D"];
+
 export default function QuizResults({
   finalScore,
   quizData,
@@ -49,11 +51,16 @@ export default function QuizResults({
                 if (x.correct_answer === index2) {
                   return (
                     <div key={index2} className="correct-answer">
+                      {letterChoices[index2] + ". "}
                       {y}
                     </div>
                   );
                 } else {
-                  return <div key={index2}>{y}</div>;
+                  return (
+                    <div key={index2}>
+                      {letterChoices[index2] + ". "} {y}
+                    </div>
+                  );
                 }
               })}
             </div>
@@ -74,11 +81,17 @@ export default function QuizResults({
                 if (x.correct_answer === index2) {
                   return (
                     <div key={index2} className="wrong-answer">
+                      {letterChoices[index2] + ". "}
                       {y}
                     </div>
                   );
                 } else {
-                  return <div key={index2}>{y}</div>;
+                  return (
+                    <div key={index2}>
+                      {letterChoices[index2] + ". "}
+                      {y}
+                    </div>
+                  );
                 }
               })}
             </div>

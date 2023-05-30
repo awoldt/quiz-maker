@@ -3,8 +3,8 @@
   src: url("./fonts/Bender.otf") format("opentype");
 }
 
-/* Large devices (desktops, 992px and up) */
-@media (min-width: 992px) {
+/* XL devices (XL screens, 1200px and up) */
+@media (min-width: 1200px) {
   #center_div_homescreen h1 {
     font-size: 60px;
   }
@@ -17,6 +17,24 @@
   .stat-text {
     font-size: 35px !important;
   }
+  #homepage_content_container p {
+    font-size: 28px !important;
+  }
+  .app-features-col {
+    padding: 25px !important;
+  }
+}
+
+/* MD devices (MD screens, 768px and up) */
+@media (min-width: 768px) {
+  #homepage_content_container p {
+    font-size: 25px;
+  }
+}
+
+.app-features-col {
+  padding: 5px;
+  max-width: 400px !important;
 }
 
 @keyframes spin {
@@ -174,6 +192,7 @@ nav {
   padding: 40px;
   color: white;
 }
+
 #num_of_quizs_tag {
   font-weight: 900;
   max-width: 800px;

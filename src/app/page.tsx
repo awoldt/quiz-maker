@@ -1,4 +1,3 @@
-import { GetHomepageStats } from "@/serverFunctions";
 import { _question, _quiz } from "../types";
 export const revalidate = 3600; //revalidates cache every hour
 
@@ -9,8 +8,6 @@ export const metadata = {
 };
 
 async function App() {
-  const stats = await GetHomepageStats();
-
   return (
     <div>
       <div id="center_div_homescreen">
@@ -21,8 +18,11 @@ async function App() {
         </a>
       </div>
 
-      <div className="content-container">
-        <p style={{ maxWidth: "1250px" }}>
+      <div
+        className="content-container text-center"
+        id="homepage_content_container"
+      >
+        <p style={{ maxWidth: "1250px" }} className="mx-auto mt-4 mb-5">
           This website is a user-friendly online platform that allows you to
           create and share interactive quizzes with others. You can craft
           personalized quizzes to challenge your friends and engage with a wider
@@ -30,47 +30,32 @@ async function App() {
           or simply looking for a fun way to connect with others, our platform
           empowers you to design captivating quizzes in minutes.
         </p>
-        <h2>Features</h2>
-        <ul>
-          <li>
-            <p>
-              <b>User-Friendly Interface</b>: Basic user-friendly interface,
-              making it easy for anyone, regardless of their technical
-              expertise, to create quizzes. The website&apos;s design focuses on
-              simplicity and ensures a smooth experience for both quiz creators
-              and participants.
-            </p>
-          </li>
 
-          <li>
+        <div className="row justify-content-center">
+          <h2><u>Features</u></h2>
+          <div className="col-xl-6 app-features-col">
             <p>
               <b>Instant Feedback and Results</b>: We provide immediate feedback
-              to participants after they complete a quiz. Participants can also
-              view their scores, completion time, and compare their performance
-              with others who have taken the quiz, fostering a sense of
-              competition and engagement.
+              to participants after they complete a quiz. Users will know all
+              the correct answers at the end of each quiz.
             </p>
-          </li>
-          <li>
+          </div>
+          <div className="col-xl-6 app-features-col">
             <p>
-              {" "}
               <b>Easy Sharing and Distribution</b>: Once you have created a quiz
               , sharing it with others is a breeze. Simply copy the link and
               share with the rest of the world.
             </p>
-          </li>
-
-          <li>
+          </div>
+          <div className="col-xl-6 app-features-col">
             <p>
+              {" "}
               <b>Mobile-Friendly Design</b>: This site is optimized for mobile
               devices, ensuring that quizzes can be taken on smartphones and
-              tablets without any loss in functionality or user experience. This
-              flexibility enables participants to take quizzes whenever and
-              wherever they prefer, making learning and entertainment accessible
-              on the go.
+              tablets without any loss in functionality or user experience.
             </p>
-          </li>
-        </ul>
+          </div>
+        </div>
       </div>
     </div>
   );

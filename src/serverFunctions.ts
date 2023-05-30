@@ -217,18 +217,3 @@ export async function getQuizPageData(
     return null;
   }
 }
-
-//gets number of quizs and questions stored in db
-//to showcase on homepage
-// returns [quizCount, questionsCount]
-export async function GetHomepageStats(): Promise<any[] | null> {
-  try {
-    const n = await pool.query(
-      `select count(*)  from quizs union select count(*) from questions;`
-    );
-    return n.rows;
-  } catch (e) {
-    console.log(e);
-    return null;
-  }
-}
