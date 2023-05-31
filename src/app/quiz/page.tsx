@@ -14,9 +14,9 @@ export async function generateMetadata({ searchParams }: any) {
   }
 
   const quizData = await pool.query(
-    `select quiz_title from quizs where quiz_id = '${searchParams.id}';`
+    `select quiz_title from ${process.env.QUIZS_TABLE} where quiz_id = '${searchParams.id}';`
   );
-  
+
   //quiz does not exist
   if (quizData.rowCount === 0) {
     return {

@@ -11,7 +11,7 @@ export const metadata = {
 async function App() {
   const recentQuizzes = await (
     await pool.query(
-      "select quiz_id, quiz_title from quizs order by created_on desc;"
+      `select quiz_id, quiz_title from ${process.env.QUIZS_TABLE} order by created_on desc;`
     )
   ).rows;
   recentQuizzes.length > 5 ? (recentQuizzes.length = 5) : null; //return at most 5 quizzes
@@ -19,8 +19,8 @@ async function App() {
   const popularQuizzes = await (
     await pool.query(
       `SELECT q.quiz_id, q.quiz_title
-      FROM quizs q
-      JOIN graded_quizs gq ON q.quiz_id = gq.quiz_id
+      FROM ${process.env.QUIZS_TABLE} q
+      JOIN ${process.env.GRADED_QUIZS_TABLE} gq ON q.quiz_id = gq.quiz_id
       GROUP BY q.quiz_id, q.quiz_title
       ORDER BY COUNT(gq.quiz_id) DESC;`
     )

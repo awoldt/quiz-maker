@@ -8,7 +8,7 @@ export async function POST(request: Request) {
     const body = JSON.parse(await new Response(request.body).text());
 
     const gradeData = await pool.query(
-      `select answers_given, score from graded_quizs where graded_id = '${body.grade_id}';`
+      `select answers_given, score from ${process.env.GRADED_QUIZS_TABLE} where graded_id = '${body.grade_id}';`
     );
 
     const x: _RESPONSE_get_quiz_grade = {

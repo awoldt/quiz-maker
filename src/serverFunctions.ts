@@ -110,13 +110,12 @@ export default async function createQuiz(
   quizQuestions: _question[],
   allowIndexing: boolean
 ) {
-  
-
   try {
     const newQuiz = await pool.query(
-      `insert into quizs (quiz_title, indexable) values ('${quizTitle.trim()}', ${allowIndexing}) returning quiz_id;`
+      `insert into ${
+        process.env.QUIZS_TABLE
+      } (quiz_title, indexable) values ('${quizTitle.trim()}', ${allowIndexing}) returning quiz_id;`
     );
-
 
     //creates a string for sql insert query
     const qs = quizQuestions
@@ -129,8 +128,9 @@ export default async function createQuiz(
       })
       .join(",");
 
-
-    await pool.query(`insert into questions values ${qs};`);
+    await pool.query(
+      `insert into ${process.env.QUESTIONS_TABLE} values ${qs};`
+    );
     console.log("new quiz successfully created");
     return newQuiz.rows[0].quiz_id;
   } catch (e) {
@@ -149,7 +149,7 @@ export async function saveGradeToDb(
     console.log("attempting to save grade to db!");
 
     const query = await pool.query(
-      `insert into graded_quizs (score, quiz_id, answers_given) values (${score}, '${quizId}', array [${userAnswers}]) RETURNING graded_id;`
+      `insert into ${process.env.GRADED_QUIZS_TABLE} (score, quiz_id, answers_given) values (${score}, '${quizId}', array [${userAnswers}]) RETURNING graded_id;`
     );
 
     console.log("sucessfully stored graded quiz in databse!");
@@ -170,9 +170,8 @@ export async function getQuizPageData(
 ): Promise<_PAGEDATA_quiz | null> {
   try {
     const quizData = await pool.query(
-      `select * from quizs where quiz_id = '${id}'`
+      `select * from ${process.env.QUIZS_TABLE} where quiz_id = '${id}'`
     );
-   
 
     //quiz does not exist
     if (quizData.rowCount === 0) {
@@ -182,14 +181,12 @@ export async function getQuizPageData(
     //quiz exists, fetch other related data
     else {
       const questionsData = await pool.query(
-        `select * from questions where quiz_id = '${id}'`
+        `select * from ${process.env.QUESTIONS_TABLE} where quiz_id = '${id}'`
       );
-    
 
       const gradesData = await pool.query(
-        `select avg(score) as avg_scores, count(score) as num_of_submissions from graded_quizs where quiz_id = '${id}';`
+        `select avg(score) as avg_scores, count(score) as num_of_submissions from ${process.env.GRADED_QUIZS_TABLE} where quiz_id = '${id}';`
       );
-    
 
       const x: _PAGEDATA_quiz = {
         quiz_id: id,
